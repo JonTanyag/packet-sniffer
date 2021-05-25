@@ -1,6 +1,7 @@
 import socket
 import struct
 import textwrap
+import pyfiglet
 
 TAB_1 = '\t - '
 TAB_2 = '\t\t - '
@@ -13,7 +14,8 @@ DATA_TAB_3 = '\t\t\t '
 DATA_TAB_4 = '\t\t\t\t '
 
 def main():
-    conn = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.ntohs(3))
+    conn = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.ntohs(3))
+	
     while True:
     	raw_data, addr = conn.recvfrom(65536)
     	dest_mac, src_mac, eth_proto, data = ethernet_frame(raw_data)
@@ -56,7 +58,10 @@ def main():
     	    print('Data:')
     	    print(format_multi_line(DATA_TAB_1, data))
     	
-    
+def banner():
+	ascii_banner = pyfiglet.figlet_format("Packet Sniffer")
+	print(ascii_banner)
+
 def ethernet_frame(data):
     dest_mac, src_mac, proto = struct.unpack('! 6s 6s H', data[:14])
     return get_mac_addr(dest_mac), get_mac_addr(src_mac), socket.htons(proto), data[14:]
@@ -102,7 +107,8 @@ def format_multi_line(prefix, string, size=80):
         if size % 2:
             size = 1
     return '\n'.join([prefix + line for line in textwrap.wrap(string, size)])
-    
+
+banner()    
 main()
 
 
