@@ -27,7 +27,7 @@ def main():
     	    print(TAB_2 + 'Protocol: {}, Source: {}, Target: {}'.format(proto, src, target))
     	    
     	    if proto == 1:
-    	    	icmp_type, code, checksum, data = icmp_paket(data)
+    	    	icmp_type, code, checksum, data = icmp_packet(data)
     	    	print(TAB_1 + 'ICMP Packet:')
     	    	print(TAB_2 + 'Type: {}, Code: {}, Checksum: {}'.format(icmp_type, code, checksum))
     	    	print(TAB_2 + 'Data:')
